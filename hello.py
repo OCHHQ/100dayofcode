@@ -1,7 +1,109 @@
-from flask import Flask
+## ********Day 54 Start**********
+## Functions can have inputs/functionality/output
+def add(n1, n2):
+    return n1 + n2
 
-app = Flask(__name__)
+def subtract(n1, n2):
+    return n1 - n2
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+def multiply(n1, n2):
+    return n1 * n2
+
+def divide(n1, n2):
+    return n1 / n2
+
+##Functions are first-class objects, can be passed around as arguments e.g. int/string/float etc.
+
+def calculate(calc_function, n1, n2):
+    return calc_function(n1, n2)
+
+result = calculate(add, 2, 3)
+print(result)
+
+##Functions can be nested in other functions
+
+def outer_function():
+    print("I'm outer")
+
+    def nested_function():
+        print("I'm inner")
+
+    nested_function()
+
+outer_function()
+
+## Functions can be returned from other functions
+def outer_function():
+    print("I'm outer")
+
+    def nested_function():
+        print("I'm inner")
+
+    return nested_function
+
+inner_function = outer_function()
+inner_function
+
+
+## Simple Python Decorator Functions
+import time
+
+def delay_decorator(function):
+    def wrapper_function():
+        time.sleep(2)
+        #Do something before
+        function()
+        function()
+        #Do something after
+    return wrapper_function
+
+@delay_decorator
+def say_hello():
+    print("Hello")
+
+#With the @ syntactic sugar
+@delay_decorator
+def say_bye():
+    print("Bye")
+
+#Without the @ syntactic sugar
+def say_greeting():
+    print("How are you?")
+decorated_function = delay_decorator(say_greeting)
+decorated_function()
+
+# # excercise
+#
+# import time
+#
+# current_time = time.time()
+# print(current_time)  # seconds since Jan 1st, 1970
+#
+#
+# # Write your code below 👇
+#
+# def speed_calc_decorator(function):
+#     def wrapper():
+#         start_time = time.time()
+#         function()
+#         end_time = time.time()
+#         execution_time = end_time - start_time
+#         print(f"{function.__name__} run speed: {execution_time}s")
+#
+#     return wrapper
+#
+#
+# @speed_calc_decorator
+# def fast_function():
+#     for i in range(1000000):
+#         i * i
+#
+#
+# @speed_calc_decorator
+# def slow_function():
+#     for i in range(10000000):
+#         i * i
+#
+#
+# fast_function()
+# slow_function()
